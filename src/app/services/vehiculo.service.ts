@@ -1,31 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { appsettings } from '../settings/appsettings';
+import { Vehiculo } from '../models/Vehiculo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculoService {
-  arpiUrl = "https://localhost:7259/api/Vehiculo";
+
+  private apiUrl: string = appsettings.apiUrl + "Vehiculo";
 
   constructor(private http: HttpClient) { }
 
-  obtenerVehiculos(){
-
+  obtenerVehiculos() {
+    return this.http.get<Vehiculo[]>(this.apiUrl);
   }
 
-  obtenerVehiculo(){
-    
+  obtenerVehiculo(id: number) {
+    return this.http.get<Vehiculo>(`${this.apiUrl}/${id}`);
   }
 
-  crearVehiculo(){
-
+  crearVehiculo(objeto: Vehiculo) {
+    return this.http.post<Vehiculo>(this.apiUrl, objeto);
   }
 
-  borrarVehiculo(){
-
+  borrarVehiculo(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  actualizarVehiculo(){
-
+  actualizarVehiculo(id: number, objeto: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, objeto);
   }
 }

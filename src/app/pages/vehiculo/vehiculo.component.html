@@ -1,0 +1,43 @@
+<div class="mat-elevation-z2" style="width: 30%; padding:30px; margin:50px auto; display:flex;">
+    <h2>{{ vehiculoID === 0 ? 'Crear Vehículo' : 'Editar Vehículo' }}</h2>
+
+    <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="sucursalID">Sucursal:</label>
+            <select formControlName="sucursalID">
+                <option value="" disabled selected>Seleccione una sucursal</option>
+                <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{ sucursal.nombre }}</option>
+              </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="marca">Marca:</label>
+            <input type="text" class="form-control" id="marca" formControlName="marca" required>
+        </div>
+
+        <div class="form-group">
+            <label for="modelo">Modelo:</label>
+            <input type="text" class="form-control" id="modelo" formControlName="modelo" required>
+        </div>
+
+        <div class="form-group">
+            <label for="anio">Año:</label>
+            <input type="number" class="form-control" id="anio" formControlName="anio" required>
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio:</label>
+            <input type="number" class="form-control" id="precio" formControlName="precio" required>
+        </div>
+
+        <div class="form-group">
+            <label for="vendido">Vendido:</label>
+            <input type="checkbox" class="form-check-input" id="vendido" formControlName="vendido">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar</button>
+            <button type="submit" class="btn btn-primary" (click)="volver()">Volver</button>
+        </div>
+        
+    </form>
+</div>

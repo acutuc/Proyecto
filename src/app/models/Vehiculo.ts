@@ -7,8 +7,3 @@ export interface Vehiculo {
     precio: number;
     vendido: boolean;
 }
-
-export interface IVehiculo {
-    vehiculoID?: string;
-    name:
-}
