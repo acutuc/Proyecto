@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Vehiculo } from '../../models/Vehiculo';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SucursalService } from '../../services/sucursal.service';
 import { CommonModule } from '@angular/common';
@@ -46,10 +45,10 @@ export class VehiculoComponent implements OnInit {
   ngOnInit(): void {
     //Obtenemos la lista de sucursales:
     this.obtenerSucursales();
-  
+
     const idParam = this.route.snapshot.paramMap.get('id');
     this.vehiculoID = idParam ? +idParam : 0;
-  
+
     //Si es diferente a 0, es que estamos modificando:
     if (this.vehiculoID !== 0) {
       this.vehiculoService.obtenerVehiculo(this.vehiculoID).subscribe({
@@ -141,25 +140,25 @@ export class VehiculoComponent implements OnInit {
       // Si vehiculoID no es 0, estamos actualizando un vehículo existente
       console.log('Datos a enviar:', this.formVehiculo.value);
       this.http.put(`https://localhost:7259/api/Vehiculo/${this.vehiculoID}`, vehiculoData, httpOptions)
-      .subscribe(
-        response => {
-          alert('Vehículo actualizado correctamente.');
-          this.router.navigate(['/vehiculos']);
-          //Reiniciamos el estado de la solicitud:
-          this.isSubmitting = false;
-        },
-        error => {
-          console.error('Error al actualizar el vehículo:', error);
-          if (error.error && error.error.message) {
-            alert('Error: ' + error.error.message);
-          } else {
-            alert('Error desconocido al actualizar el vehículo.');
+        .subscribe(
+          response => {
+            alert('Vehículo actualizado correctamente.');
+            this.router.navigate(['/vehiculos']);
+            //Reiniciamos el estado de la solicitud:
+            this.isSubmitting = false;
+          },
+          error => {
+            console.error('Error al actualizar el vehículo:', error);
+            if (error.error && error.error.message) {
+              alert('Error: ' + error.error.message);
+            } else {
+              alert('Error desconocido al actualizar el vehículo.');
+            }
+            //Reiniciamos el estado de la solicitud:
+            this.isSubmitting = false;
           }
-          //Reiniciamos el estado de la solicitud:
-          this.isSubmitting = false;
-        }
-      );
-  }
+        );
+    }
   }
 
   //Función para manejar el envío del formulario

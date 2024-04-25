@@ -7,6 +7,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { VehiculosComponent } from './pages/vehiculos/vehiculos.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { SucursalesComponent } from './pages/sucursales/sucursales.component';
+import { SucursalComponent } from './pages/sucursal/sucursal.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 export const routes: Routes = [
     {
@@ -30,21 +32,33 @@ export const routes: Routes = [
                 component:VehiculosComponent
             },
             {
+                path: "vehiculo/:id",
+                component: VehiculoComponent
+            },
+            {
                 path:'usuarios',
                 component:UsuariosComponent
             },
             {
+                path:'usuario/:id',
+                component:UsuarioComponent
+            },
+            {
                 path:'sucursales',
                 component:SucursalesComponent
-            }
+            },
+            {
+                path:'sucursal',
+                component:SucursalComponent
+            },
+            {
+                path: "sucursal/:id",
+                component: SucursalComponent
+            },
         ]
     },
     {
         path: "inicio",
         component: InicioComponent
-    },
-    {
-        path: "vehiculo/:id",
-        component: VehiculoComponent
     }
 ];

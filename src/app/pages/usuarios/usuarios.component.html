@@ -1,1 +1,17 @@
-<p>usuarios works!</p>
+<p-button label="Nuevo usuario" (click)="nuevoUsuario()"></p-button>
+<p-table [value]="listaUsuarios" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of mostrarColumnas">
+                {{ col.header }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+        <tr>
+            <td>{{ usuario.usuarioID }}</td>
+            <td>{{ usuario.nombreUsuario }}</td>
+            <td class="flex"><i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editarUsuario(usuario)"></i><i class="pi pi-times"style="font-size: 2.5rem;" (click)="eliminarUsuario(usuario)"></i></td>
+        </tr>
+    </ng-template>
+</p-table>

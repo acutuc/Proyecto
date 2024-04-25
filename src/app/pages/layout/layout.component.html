@@ -1,13 +1,16 @@
 <div class="menu-container">
     <p-menubar>
         <form>
+            <p-button *ngIf="botonVolver" label="Atrás" (click)="volver()"></p-button>
+        </form>
+        <form>
             <span>{{usuarioLogueado}}</span>
             <p-button label="Salir" (click)="logout()"></p-button>
         </form>
     </p-menubar>
 </div>
+
 <div class="padre">
-    
     <router-outlet></router-outlet>
 </div>
 

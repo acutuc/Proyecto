@@ -1,1 +1,23 @@
-<p>sucursales works!</p>
+<p-button label="Nueva sucursal" (click)="nuevaSucursal()"></p-button>
+
+<p-table [value]="listaSucursales" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of mostrarColumnas">
+                {{ col.header }}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sucursal>
+        <tr>
+            <td>{{ sucursal.sucursalID }}</td>
+            <td>{{ sucursal.usuarioID}}</td>
+            <td>{{ sucursal.nombreSucursal }}</td>
+            <td>{{ sucursal.ubicacion }}</td>
+            <td class="flex">
+                <i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editarSucursal(sucursal)"></i>
+                <i class="pi pi-times" style="font-size: 2.5rem;" (click)="eliminarSucursal(sucursal)"></i>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
