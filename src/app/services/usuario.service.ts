@@ -31,4 +31,8 @@ export class UsuarioService {
   actualizarUsuario(id: number, objeto: any) {
     return this.http.put(`${this.apiUrl}/${id}`, objeto);
   }
+
+  obtenerSucursalesPorUsuario(usuarioID: number){
+    return this.http.get(`${this.apiUrl}/${usuarioID}/sucursales`);
+  }
 }

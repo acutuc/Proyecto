@@ -11,6 +11,11 @@
         <tr>
             <td>{{ usuario.usuarioID }}</td>
             <td>{{ usuario.nombreUsuario }}</td>
+            @if (usuario.tipoUsuario == null) {
+                <td>normal</td>
+            }@else{
+                <td>{{ usuario.tipoUsuario }}</td>
+            }
             <td class="flex"><i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editarUsuario(usuario)"></i><i class="pi pi-times"style="font-size: 2.5rem;" (click)="eliminarUsuario(usuario)"></i></td>
         </tr>
     </ng-template>

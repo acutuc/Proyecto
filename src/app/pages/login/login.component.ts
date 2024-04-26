@@ -36,20 +36,24 @@ export class LoginComponent implements OnInit {
 
   onRegistro() {
     this.http.post('https://localhost:7259/api/Usuario', this.registroObj).subscribe((res: any) => {
-        if (res && res.usuarioID) {
-          alert("Usuario registrado");
-          this.registroVisible = false;
-        } else {
-          alert("Error desconocido.");
-        }
-      },
+      if (res && res.usuarioID) {
+        alert("Usuario registrado");
+        this.registroVisible = false;
+      } else {
+        alert("Error desconocido.");
+      }
+    },
       (error: any) => {
         //Unauthorized desde el back, mostramos el error que nos devuelve el objeto:
         if (error.status === 401) {
           alert(error.error.message);
         } else {
           console.log(error.message);
-          alert('Error inesperado');
+          if(this.registroObj.claveUsuario == "" || this.registroObj.nombreUsuario === ""){
+            alert('Rellene todos los campos');
+          }else{
+            alert('Este usuario ya se encuentra registrado en la BD.');
+          }          
         }
       }
     );
@@ -58,25 +62,28 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.http.post('https://localhost:7259/api/Usuario/login', this.loginObj).subscribe((res: any) => {
-        if (res && res.token) {
-          //Nos guardamos el tipo de usuario:
-          this.tipoUsuario = res.tipoUsuario;
-          alert("Logueado con éxito");
-          //Guardamos el token:
-          localStorage.setItem('estaEsLaKey', res.token);
-          //Guardamos los datos del usuario:
-          localStorage.setItem('usuarioLogueado', JSON.stringify(res.nombreUsuario));
-
-          if (this.tipoUsuario === "admin") {
-            this.router.navigateByUrl('/dashboard');
-          } else {
-            /////////////////////////////////////////////////
-            console.log("redirige a otro lado");
-          }
+      if (res && res.token) {
+        //Nos guardamos el tipo de usuario:
+        this.tipoUsuario = res.tipoUsuario;
+        alert("Logueado con éxito");
+        //Guardamos el token:
+        localStorage.setItem('estaEsLaKey', res.token);
+        //Guardamos los datos del usuario:
+        localStorage.setItem('usuarioLogueado', JSON.stringify({
+          usuarioID: res.usuarioID,
+          nombreUsuario: res.nombreUsuario,
+          tipoUsuario: res.tipoUsuario
+        }));
+        if (this.tipoUsuario === "admin") {
+          this.router.navigateByUrl('/dashboard');
         } else {
-          this.handleError("Error inesperado al intentar iniciar sesasdasdión.");
+          /////////////////////////////////////////////////
+          this.router.navigateByUrl('/ndashboard');
         }
-      },
+      } else {
+        this.handleError("Error inesperado al intentar iniciar sesasdasdión.");
+      }
+    },
       (error: any) => {
         if (error.status === 401) {
           this.handleError(error.error.message);

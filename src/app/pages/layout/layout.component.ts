@@ -18,7 +18,7 @@ export class LayoutComponent implements OnInit {
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
-      this.botonVolver = this.router.url !== '/dashboard';
+      this.botonVolver = (this.router.url !== '/dashboard' && this.router.url !== "/ndashboard");
     });
   }
 
@@ -28,7 +28,7 @@ export class LayoutComponent implements OnInit {
       const usuarioLogueadoString = localStorage.getItem('usuarioLogueado');
 
       if (usuarioLogueadoString) {
-        this.usuarioLogueado = JSON.parse(usuarioLogueadoString);
+        this.usuarioLogueado = JSON.parse(usuarioLogueadoString).nombreUsuario;
       } else {
         // Si no hay usuario logueado, redirigir al componente de login
         this.router.navigate(['/login']);
@@ -38,11 +38,11 @@ export class LayoutComponent implements OnInit {
 
   logout() {
     //Eliminamos los datos del usuario del almacenamiento local:
-  localStorage.removeItem('estaEsLaKey');
-  localStorage.removeItem('usuarioLogueado');
-  
-  //Redirigimos al usuario a la página de login:
-  this.router.navigate(['/login']);
+    localStorage.removeItem('estaEsLaKey');
+    localStorage.removeItem('usuarioLogueado');
+
+    //Redirigimos al usuario a la página de login:
+    this.router.navigate(['/login']);
   }
 
   volver() {

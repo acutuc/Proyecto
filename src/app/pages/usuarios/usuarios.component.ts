@@ -21,6 +21,7 @@ export class UsuariosComponent implements OnInit{
     this.mostrarColumnas = [
       { field: 'usuarioID', header: 'ID Usuario' },
       { field: 'nombreUsuario', header: 'Usuario' },
+      { field: 'tipoUsuario', header:"Rol"},
       { field: 'accion', header: "" }
     ];
   }

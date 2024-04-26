@@ -9,6 +9,8 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { SucursalesComponent } from './pages/sucursales/sucursales.component';
 import { SucursalComponent } from './pages/sucursal/sucursal.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { NdashboardComponent } from './pages/ndashboard/ndashboard.component';
+import { VehiculosEnSucursalComponent } from './pages/vehiculos-en-sucursal/vehiculos-en-sucursal.component';
 
 export const routes: Routes = [
     {
@@ -55,6 +57,14 @@ export const routes: Routes = [
                 path: "sucursal/:id",
                 component: SucursalComponent
             },
+            {
+                path:'ndashboard',
+                component:NdashboardComponent
+            },
+            {
+                path:'vehiculos-en-sucursal/:id',
+                component:VehiculosEnSucursalComponent
+            }
         ]
     },
     {
