@@ -1,11 +1,20 @@
 <p-button label="Nueva sucursal" (click)="nuevaSucursal()"></p-button>
 
-<p-table [value]="listaSucursales" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped">
+<p-table
+    [value]="listaSucursales"
+    [tableStyle]="{ 'min-width': '50rem'}"
+    styleClass="p-datatable-striped"
+    [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} sucursales"
+>
     <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let col of mostrarColumnas">
-                {{ col.header }}
-            </th>
+            <th pSortableColumn="sucursalID">ID Sucursal<p-sortIcon field="sucursalID"></p-sortIcon></th>
+            <th pSortableColumn="usuarioID">ID Usuario<p-sortIcon field="usuarioID"></p-sortIcon></th>
+            <th pSortableColumn="nombreSucursal">Nombre Sucursal<p-sortIcon field="nombreSucursal"></p-sortIcon></th>
+            <th pSortableColumn="ubicacion">Ubicación<p-sortIcon field="ubicacion"></p-sortIcon></th>
+            <th>Acción</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sucursal>

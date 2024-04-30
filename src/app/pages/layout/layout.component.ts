@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class LayoutComponent implements OnInit {
   usuarioLogueado: any;
   botonVolver = true;
+  tipoUsuarioLogueado: any;
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
@@ -28,7 +29,10 @@ export class LayoutComponent implements OnInit {
       const usuarioLogueadoString = localStorage.getItem('usuarioLogueado');
 
       if (usuarioLogueadoString) {
+        //Obtenemos el nombre del usuario:
         this.usuarioLogueado = JSON.parse(usuarioLogueadoString).nombreUsuario;
+        //Obtenemos el tipo de usuario:
+        this.tipoUsuarioLogueado = JSON.parse(usuarioLogueadoString).tipoUsuario;
       } else {
         // Si no hay usuario logueado, redirigir al componente de login
         this.router.navigate(['/login']);
@@ -46,7 +50,13 @@ export class LayoutComponent implements OnInit {
   }
 
   volver() {
-    this.router.navigate(['/dashboard']);
+
+    if(this.tipoUsuarioLogueado !== "admin"){
+      this.router.navigate(['/ndashboard']);
+    }else{
+      this.router.navigate(['/dashboard']);
+    }
+    
   }
 
 }

@@ -1,1 +1,23 @@
-<p>vehiculos-en-sucursal works!</p>
+<button pButton type="button" label="Solicitar compra de vehículo" (click)="solicitarCompraVehiculo()"></button>
+<p-table [value]="vehiculos" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="vehiculoID">ID Vehículo<p-sortIcon field="vehiculoID"></p-sortIcon></th>
+            <th pSortableColumn="marca">Marca<p-sortIcon field="marca"></p-sortIcon></th>
+            <th pSortableColumn="modelo">Modelo<p-sortIcon field="modelo"></p-sortIcon></th>
+            <th pSortableColumn="anio">Año<p-sortIcon field="anio"></p-sortIcon></th>
+            <th pSortableColumn="precio">Precio<p-sortIcon field="precio"></p-sortIcon></th>
+            <th pSortableColumn="vendido">Disponibilidad<p-sortIcon field="vendido"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vehiculo>
+        <tr>
+            <td>{{ vehiculo.vehiculoID }}</td>
+            <td>{{ vehiculo.marca }}</td>
+            <td>{{ vehiculo.modelo }}</td>
+            <td>{{ vehiculo.anio }}</td>
+            <td>{{ vehiculo.precio }}</td>
+            <td>{{ vehiculo.vendido }}</td>
+        </tr>
+    </ng-template>
+</p-table>

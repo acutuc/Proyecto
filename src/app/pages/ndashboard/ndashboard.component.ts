@@ -21,6 +21,15 @@ export class NdashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('estaEsLaKey');
+
+      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+      if (!token) {
+        this.router.navigateByUrl('/login')
+      }
+      
+    }
     const usuarioLogueado = localStorage.getItem('usuarioLogueado');
 
     if (usuarioLogueado) {
@@ -39,7 +48,7 @@ export class NdashboardComponent implements OnInit {
     }
   }
 
-  verVehiculos(sucursalID: number){
+  verVehiculos(sucursalID: number) {
     this.router.navigate(['/vehiculos-en-sucursal', sucursalID]);
   }
 }

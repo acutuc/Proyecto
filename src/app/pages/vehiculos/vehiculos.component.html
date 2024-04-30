@@ -1,10 +1,22 @@
 <p-button label="Nuevo vehículo" (click)="nuevo()"></p-button>
-<p-table [value]="listaVehiculos" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped">
+<p-table
+    [value]="listaVehiculos"
+    [tableStyle]="{ 'min-width': '50rem'}"
+    styleClass="p-datatable-striped"
+    [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} vehículos"
+>
     <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let col of mostrarColumnas">
-                {{ col.header }}
-            </th>
+            <th pSortableColumn="vehiculoID">ID Vehículo<p-sortIcon field="vehiculoID"></p-sortIcon></th>
+            <th pSortableColumn="sucursalID">ID Sucursal<p-sortIcon field="sucursalID"></p-sortIcon></th>
+            <th pSortableColumn="marca">Marca<p-sortIcon field="marca"></p-sortIcon></th>
+            <th pSortableColumn="modelo">Modelo<p-sortIcon field="modelo"></p-sortIcon></th>
+            <th pSortableColumn="anio">Año<p-sortIcon field="anio"></p-sortIcon></th>
+            <th pSortableColumn="precio">Precio<p-sortIcon field="precio"></p-sortIcon></th>
+            <th pSortableColumn="Disponibilidad">Disponibilidad<p-sortIcon field="Disponibilidad"></p-sortIcon></th>
+            <th>Acción</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vehiculo>
@@ -16,7 +28,10 @@
             <td>{{ vehiculo.anio }}</td>
             <td>{{ vehiculo.precio }}</td>
             <td>{{ vehiculo.vendido }}</td>
-            <td class="flex"><i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editar(vehiculo)"></i><i class="pi pi-times"style="font-size: 2.5rem;" (click)="eliminar(vehiculo)"></i></td>
+            <td class="flex">
+                <i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editar(vehiculo)"></i>
+                <i class="pi pi-times" style="font-size: 2.5rem;" (click)="eliminar(vehiculo)"></i>
+            </td>
         </tr>
     </ng-template>
 </p-table>

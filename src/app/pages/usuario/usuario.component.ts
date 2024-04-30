@@ -39,6 +39,16 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('estaEsLaKey');
+
+      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+      if (!token) {
+        this.router.navigateByUrl('/login')
+      }
+      
+    }
+    
     //Obtenemos la lista de sucursales:
     this.obtenerSucursales();
 

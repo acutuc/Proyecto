@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { InicioComponent } from './pages/inicio/inicio.component';
 import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './pages/layout/layout.component';
@@ -11,6 +10,7 @@ import { SucursalComponent } from './pages/sucursal/sucursal.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { NdashboardComponent } from './pages/ndashboard/ndashboard.component';
 import { VehiculosEnSucursalComponent } from './pages/vehiculos-en-sucursal/vehiculos-en-sucursal.component';
+import { SolicitudCompraVehiculoComponent } from './pages/solicitud-compra-vehiculo/solicitud-compra-vehiculo.component';
 
 export const routes: Routes = [
     {
@@ -64,11 +64,11 @@ export const routes: Routes = [
             {
                 path:'vehiculos-en-sucursal/:id',
                 component:VehiculosEnSucursalComponent
+            },
+            {
+                path:'solicitud-compra-vehiculo',
+                component:SolicitudCompraVehiculoComponent
             }
         ]
-    },
-    {
-        path: "inicio",
-        component: InicioComponent
     }
 ];

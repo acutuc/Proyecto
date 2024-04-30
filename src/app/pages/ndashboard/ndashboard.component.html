@@ -1,10 +1,10 @@
 <p-table [value]="sucursales" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Ubicación</th>
-            <th>Acciones</th>
+            <th pSortableColumn="sucursalID">ID Sucursal<p-sortIcon field="sucursalID"></p-sortIcon></th>
+            <th pSortableColumn="nombreSucursal">Nombre Sucursal<p-sortIcon field="nombreSucursal"></p-sortIcon></th>
+            <th pSortableColumn="ubicacion">Ubicación<p-sortIcon field="ubicacion"></p-sortIcon></th>
+            <th>Acción</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sucursal>

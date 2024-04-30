@@ -15,26 +15,16 @@ import { Router } from '@angular/router';
 })
 export class VehiculosComponent implements OnInit {
   public listaVehiculos: Vehiculo[] = [];
-  public mostrarColumnas: any[];
 
   constructor(private vehiculoServicio: VehiculoService, private router: Router) {
-    this.mostrarColumnas = [
-      { field: 'vehiculoID', header: 'ID Vehículo' },
-      { field: 'sucursalID', header: 'ID Sucursal' },
-      { field: 'marca', header: 'Marca' },
-      { field: 'modelo', header: 'Modelo' },
-      { field: 'anio', header: 'Año' },
-      { field: 'precio', header: 'Precio' },
-      { field: 'disponibilidad', header: 'Disponibilidad' },
-      { field: 'accion', header: "" }
-    ];
+    
   }
 
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login:
       if (!token) {
         this.router.navigateByUrl('/login')
       }
