@@ -35,8 +35,7 @@ export class VehiculoComponent implements OnInit {
       marca: [""],
       modelo: [""],
       anio: [0],
-      precio: [0],
-      vendido: [false]
+      precio: [0]
     });
   }
 
@@ -65,14 +64,12 @@ export class VehiculoComponent implements OnInit {
         next: (data) => {
           const vehiculoFormValue = {
             vehiculoID: data.vehiculoID,
-            sucursalID: data.sucursalID,
             marca: data.marca,
             modelo: data.modelo,
             anio: data.anio,
-            precio: data.precio,
-            vendido: data.vendido
+            precio: data.precio
           };
-          console.log('Datos del vehículo:', vehiculoFormValue); // Imprime los datos recibidos
+          console.log('Datos del vehículo:', vehiculoFormValue);
           this.formVehiculo.patchValue(vehiculoFormValue);
         },
         error: (err) => {
@@ -112,8 +109,7 @@ export class VehiculoComponent implements OnInit {
       marca: this.formVehiculo.value.marca,
       modelo: this.formVehiculo.value.modelo,
       anio: this.formVehiculo.value.anio,
-      precio: this.formVehiculo.value.precio,
-      vendido: this.formVehiculo.value.vendido
+      precio: this.formVehiculo.value.precio
     };
 
     const httpOptions = {
@@ -125,7 +121,7 @@ export class VehiculoComponent implements OnInit {
     //Marcamos que se está procesando una solicitud
     this.isSubmitting = true;
 
-    // Si vehiculoID es 0, estamos creando un nuevo vehículo
+    //Si vehiculoID es 0, estamos creando un nuevo vehículo
     if (this.vehiculoID === 0) {
       this.http.post('https://localhost:7259/api/Vehiculo', this.formVehiculo.value, httpOptions)
         .subscribe(

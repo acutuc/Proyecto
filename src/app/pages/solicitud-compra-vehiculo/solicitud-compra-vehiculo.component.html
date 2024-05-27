@@ -1,1 +1,80 @@
-<p>solicitud-compra-vehiculo works!</p>
+<h2>Solicitud de Compra de Vehículo</h2>
+
+<div *ngIf="!mostrarFormularioVehiculo">
+    <form [formGroup]="solicitudForm" (ngSubmit)="onSubmit()">
+        <div>
+            <p-floatLabel>
+                <input pInputText id="dni" formControlName="dni" />
+                <label for="dni">Introduzca el DNI del cliente</label>
+            </p-floatLabel>
+        </div>
+        <p></p>
+        <p-button label="Consultar" type="submit" [raised]="true"></p-button>
+    </form>
+
+    <div *ngIf="clienteExiste === false">
+        <p>El cliente no existe. Por favor, rellene el siguiente formulario para registrar un nuevo cliente.</p>
+
+        <form [formGroup]="altaClienteForm" (ngSubmit)="registrarNuevoCliente()">
+            <div class="form">
+                <p-floatLabel>
+                    <input pInputText id="nombreCliente" formControlName="nombreCliente" />
+                    <label for="nombreCliente">Nombre</label>
+                </p-floatLabel>
+            </div>
+            <div class="form">
+                <p-floatLabel>
+                    <input pInputText id="apellidosCliente" formControlName="apellidosCliente" />
+                    <label for="apellidosCliente">Apellidos</label>
+                </p-floatLabel>
+            </div>
+            <div class="form">
+                <p-floatLabel>
+                    <input pInputText id="telefonoCliente" formControlName="telefonoCliente" />
+                    <label for="telefonoCliente">Teléfono</label>
+                </p-floatLabel>
+            </div>
+            <div class="form">
+                <p-floatLabel>
+                    <input pInputText id="dni" formControlName="dni" [disabled]="true" />
+                    <label for="dni">DNI</label>
+                </p-floatLabel>
+            </div>
+            <p></p>
+            <p-button label="Registrar" type="submit" [raised]="true"></p-button>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="mostrarFormularioVehiculo">
+    <p>Formulario para registrar vehículo:</p>
+
+    <form [formGroup]="vehiculoForm" (ngSubmit)="registrarVehiculo()">
+        <div class="form">
+            <p-floatLabel>
+                <input pInputText id="marca" formControlName="marca" />
+                <label for="marca">Marca</label>
+            </p-floatLabel>
+        </div>
+        <div class="form">
+            <p-floatLabel>
+                <input pInputText id="modelo" formControlName="modelo" />
+                <label for="modelo">Modelo</label>
+            </p-floatLabel>
+        </div>
+        <div class="form">
+            <p-floatLabel>
+                <input pInputText id="anio" formControlName="anio" />
+                <label for="anio">Año</label>
+            </p-floatLabel>
+        </div>
+        <div class="form">
+            <p-floatLabel>
+                <input pInputText id="precio" formControlName="precio" />
+                <label for="precio">Precio</label>
+            </p-floatLabel>
+        </div>
+        <p></p>
+        <p-button label="Registrar Vehículo" type="submit" [raised]="true"></p-button>
+    </form>
+</div>

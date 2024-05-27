@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { appsettings } from '../settings/appsettings';
 import { Vehiculo } from '../models/Vehiculo';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,10 @@ export class VehiculoService {
 
   actualizarVehiculo(id: number, objeto: any) {
     return this.http.put(`${this.apiUrl}/${id}`, objeto);
+  }
+
+  //Vehículos en una misma sucursal
+  obtenerVehiculosEnSucursal(sucursalId: number): Observable<Vehiculo[]> {
+    return this.http.get<Vehiculo[]>(`${this.apiUrl}/VehiculosEnSucursal/${sucursalId}`);
   }
 }

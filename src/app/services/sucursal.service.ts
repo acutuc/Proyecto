@@ -31,8 +31,4 @@ export class SucursalService {
   actualizarSucursal(id: number, objeto: Sucursal) {
     return this.http.put(`${this.apiUrl}/${id}`, objeto);
   }
-
-  obtenerVehiculosPorSucursal(sucursalID: number){
-    return this.http.get(`${this.apiUrl}/${sucursalID}/vehiculos`);
-  }
 }

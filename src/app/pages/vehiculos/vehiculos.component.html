@@ -1,4 +1,4 @@
-<p-button label="Nuevo vehículo" (click)="nuevo()"></p-button>
+<!--<p-button label="Nuevo vehículo" (click)="nuevo()"></p-button>-->
 <p-table
     [value]="listaVehiculos"
     [tableStyle]="{ 'min-width': '50rem'}"
@@ -10,24 +10,21 @@
     <ng-template pTemplate="header">
         <tr>
             <th pSortableColumn="vehiculoID">ID Vehículo<p-sortIcon field="vehiculoID"></p-sortIcon></th>
-            <th pSortableColumn="sucursalID">ID Sucursal<p-sortIcon field="sucursalID"></p-sortIcon></th>
             <th pSortableColumn="marca">Marca<p-sortIcon field="marca"></p-sortIcon></th>
             <th pSortableColumn="modelo">Modelo<p-sortIcon field="modelo"></p-sortIcon></th>
             <th pSortableColumn="anio">Año<p-sortIcon field="anio"></p-sortIcon></th>
             <th pSortableColumn="precio">Precio<p-sortIcon field="precio"></p-sortIcon></th>
-            <th pSortableColumn="Disponibilidad">Disponibilidad<p-sortIcon field="Disponibilidad"></p-sortIcon></th>
+            
             <th>Acción</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vehiculo>
         <tr>
             <td>{{ vehiculo.vehiculoID }}</td>
-            <td>{{ vehiculo.sucursalID }}</td>
             <td>{{ vehiculo.marca }}</td>
             <td>{{ vehiculo.modelo }}</td>
             <td>{{ vehiculo.anio }}</td>
             <td>{{ vehiculo.precio }}</td>
-            <td>{{ vehiculo.vendido }}</td>
             <td class="flex">
                 <i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editar(vehiculo)"></i>
                 <i class="pi pi-times" style="font-size: 2.5rem;" (click)="eliminar(vehiculo)"></i>

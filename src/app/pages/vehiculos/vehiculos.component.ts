@@ -43,9 +43,11 @@ export class VehiculosComponent implements OnInit {
     });
   }
 
+  /*
   nuevo() {
     this.router.navigate(['/vehiculo', 0]);
   }
+  */
 
   editar(objeto: Vehiculo) {
     this.router.navigate(['/vehiculo', objeto.vehiculoID]);

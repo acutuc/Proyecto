@@ -66,7 +66,7 @@ export const routes: Routes = [
                 component:VehiculosEnSucursalComponent
             },
             {
-                path:'solicitud-compra-vehiculo',
+                path:'solicitud-compra-vehiculo/:id',
                 component:SolicitudCompraVehiculoComponent
             }
         ]
