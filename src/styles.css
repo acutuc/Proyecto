@@ -25,7 +25,7 @@ div.menu-container > p-menubar > div > div > div > p-tabmenu > div > div > div >
     background-color: #ffdfdf;
 }
 
-/* Color para "Dashboard" en usuario de tipo normal */
+/* Color para "Ndashboard" en usuario de tipo normal */
 div.menu-container > p-menubar > div > div > div > p-tabmenu > div > div > div > ul > li.p-element.menu-item-dashboard-normal > a {
     color: #e4d8ff !important;
     background-color: #512DA8;
@@ -59,11 +59,78 @@ body > app-root > app-layout > div.menu-container > p-menubar > div > div > span
     font-weight: bold;
 }
 
-/* Colores para los botones de las tablas */
-p-paginator > div > span.p-paginator-pages > button,
-#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-next.p-paginator-element.p-link.p-disabled > anglerighticon,
-#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-last.p-paginator-element.p-link.p-disabled > angledoublerighticon,
-#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-prev.p-paginator-element.p-link.p-disabled > anglelefticon,
-#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-first.p-paginator-element.p-link.p-disabled > angledoublelefticon{
-    color:white;
+/* ESTILOS PARA LAS TABLAS */
+/* Estilos generales para la tabla */
+.p-datatable {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    overflow: hidden;
 }
+
+/* Estilos para el encabezado de la tabla */
+.p-datatable thead th {
+    background-color: #9e74ff;
+    color: #ffffff;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Estilos para las filas de la tabla */
+.p-datatable tbody tr {
+    transition: background-color 0.3s;
+}
+
+.p-datatable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.p-datatable tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilos para las celdas de la tabla */
+.p-datatable tbody td {
+    padding: 10px;
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Estilos para el botón en la tabla */
+.p-button {
+    background-color: #512DA8;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.p-button:hover {
+    background-color: #6a3dc2;
+}
+
+/* Estilos para el paginador */
+.p-paginator {
+    background-color: #ffffff;
+    border-top: 1px solid #d9d9d9;
+}
+
+.p-paginator .p-paginator-element {
+    color: #fdfdfd;
+}
+
+.p-paginator .p-paginator-pages button {
+    background-color: #f9f9f9;
+    color: #512DA8;
+    border: none;
+}
+
+.p-paginator .p-paginator-pages button:hover {
+    background-color: #e0e0e0;
+}
+
+/********************************************************/

@@ -3,7 +3,6 @@ import { VehiculoService } from '../../services/vehiculo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SucursalService } from '../../services/sucursal.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -15,8 +14,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrl: './vehiculo.component.css'
 })
 export class VehiculoComponent implements OnInit {
-  public sucursales: any[] = [];
-
   vehiculoID: number = 0;
 
   public formVehiculo: FormGroup;
@@ -27,11 +24,9 @@ export class VehiculoComponent implements OnInit {
     private vehiculoService: VehiculoService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private sucursalService: SucursalService,
     private http: HttpClient
   ) {
     this.formVehiculo = this.formBuilder.group({
-      sucursalID: [0],
       marca: [""],
       modelo: [""],
       anio: [0],
@@ -51,9 +46,6 @@ export class VehiculoComponent implements OnInit {
       }
       
     }
-    
-    //Obtenemos la lista de sucursales:
-    this.obtenerSucursales();
 
     const idParam = this.route.snapshot.paramMap.get('id');
     this.vehiculoID = idParam ? +idParam : 0;
@@ -79,22 +71,6 @@ export class VehiculoComponent implements OnInit {
     }
   }
 
-  obtenerSucursales() {
-    this.sucursalService.obtenerSucursales().subscribe({
-      next: (data) => {
-        this.sucursales = data.map(sucursal => {
-          return {
-            id: sucursal.sucursalID,
-            nombre: sucursal.nombreSucursal
-          };
-        });
-      },
-      error: (err) => {
-        console.log(err.message);
-      }
-    });
-  }
-
 
   isSubmitting = false;
   guardar() {
@@ -105,7 +81,6 @@ export class VehiculoComponent implements OnInit {
 
     const vehiculoData = {
       vehiculoID: this.vehiculoID,
-      sucursalID: this.formVehiculo.value.sucursalID,
       marca: this.formVehiculo.value.marca,
       modelo: this.formVehiculo.value.modelo,
       anio: this.formVehiculo.value.anio,

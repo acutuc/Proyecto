@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { SolicitudService } from '../../services/solicitud.service';
 import { Solicitud } from '../../models/Solicitud';
+import { Cliente } from '../../models/Cliente'; // Asegúrate de que el modelo Cliente esté importado correctamente
 
 @Component({
   selector: 'app-solicitud-compra-vehiculo',
@@ -26,9 +27,11 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
   clienteExiste: boolean | undefined;
   clienteID: number | undefined;
   mostrarFormularioVehiculo: boolean = false;
+  clienteDatos: Cliente | null = null; // Nueva propiedad para almacenar los datos del cliente
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private clienteService: ClienteService,
     private vehiculoService: VehiculoService,
@@ -70,6 +73,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
         if (cliente) {
           this.clienteExiste = true;
           this.clienteID = cliente.clienteID;
+          this.clienteDatos = cliente; // Almacena los datos del cliente
           this.mostrarFormularioVehiculo = true;
           console.log('El cliente existe con ID:', this.clienteID);
         } else {
@@ -102,6 +106,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
     this.clienteService.crearCliente(nuevoCliente).subscribe(
       (cliente) => {
         this.clienteID = cliente.clienteID;
+        this.clienteDatos = cliente; // Almacena los datos del cliente nuevo
         this.mostrarFormularioVehiculo = true;
         console.log('Cliente registrado:', cliente);
       },
@@ -147,7 +152,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
     this.solicitudService.crearSolicitud(nuevaSolicitud).subscribe(
       (solicitud) => {
         console.log('Solicitud creada:', solicitud);
-        // Lógica adicional después de crear la solicitud (redireccionar, mostrar mensaje, etc.)
+        this.router.navigateByUrl('/ndashboard');
       },
       (error) => {
         console.error('Error creando la solicitud:', error);

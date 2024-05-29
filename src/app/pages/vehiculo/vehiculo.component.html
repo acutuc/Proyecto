@@ -2,13 +2,6 @@
     <h2>{{ vehiculoID === 0 ? 'Crear Vehículo' : 'Editar Vehículo' }}</h2>
 
     <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="sucursalID">Sucursal:</label>
-            <select formControlName="sucursalID">
-                <option value="" disabled selected>Seleccione una sucursal</option>
-                <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">{{ sucursal.nombre }}</option>
-            </select>
-        </div>
 
         <div class="form-group">
             <label for="marca">Marca:</label>

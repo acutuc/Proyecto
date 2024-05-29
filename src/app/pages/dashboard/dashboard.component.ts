@@ -8,11 +8,17 @@ import { SolicitudService } from '../../services/solicitud.service';
 import { Solicitud } from '../../models/Solicitud';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
+import { ModalComponent } from '../modal/modal.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ButtonModule, CommonModule, TableModule, InputIconModule, IconFieldModule],
+  imports: [
+    ButtonModule, CommonModule, TableModule, InputIconModule, IconFieldModule, 
+    ModalComponent, InputTextModule, DropdownModule
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -21,7 +27,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private intervalo: any;
   loading: boolean = true;
 
-  constructor(private http: HttpClient, private router: Router, private solicitudServicio: SolicitudService) { }
+  solicitudParaActualizar: Solicitud | null = null;
+  estadoParaActualizar: string = '';
+  mostrarModal: boolean = false;
+
+  statuses: any[];
+  activityValues: number[] = [0, 100];
+
+  constructor(private http: HttpClient, private router: Router, private solicitudServicio: SolicitudService) { 
+    this.statuses = [
+      { label: 'Aprobada', value: 'aprobada' },
+      { label: 'Rechazada', value: 'rechazada' },
+      { label: 'Pendiente', value: 'pendiente' }
+    ];
+  }
 
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
@@ -48,7 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   obtenerSolicitudesNoAceptadas() {
     this.solicitudServicio.obtenerSolicitudesNoAceptadas().subscribe({
       next: (data) => {
-        console.log(data)
+        console.log(data);
         this.listaSolicitudes = data;
       },
       error: (err) => {
@@ -58,19 +77,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   actualizarEstado(solicitud: Solicitud, estado: string) {
-    if (solicitud.solicitudID !== undefined) {
-      this.solicitudServicio.actualizarEstadoSolicitud(solicitud.solicitudID!, estado).subscribe({
+    this.solicitudParaActualizar = solicitud;
+    this.estadoParaActualizar = estado;
+    this.mostrarModal = true;
+  }
+
+  confirmarActualizacion() {
+    if (this.solicitudParaActualizar && this.solicitudParaActualizar.solicitudID !== undefined) {
+      this.solicitudServicio.actualizarEstadoSolicitud(this.solicitudParaActualizar.solicitudID, this.estadoParaActualizar).subscribe({
         next: () => {
-          solicitud.estado = estado;
+          this.solicitudParaActualizar!.estado = this.estadoParaActualizar;
           // Actualizamos el componente al cambiar un estado:
           this.obtenerSolicitudesNoAceptadas();
+          this.mostrarModal = false;
         },
         error: (err) => {
           console.log(err.message);
+          this.mostrarModal = false;
         }
       });
     } else {
       console.error('solicitudID es undefined');
+      this.mostrarModal = false;
     }
+  }
+
+  cancelarActualizacion() {
+    this.solicitudParaActualizar = null;
+    this.estadoParaActualizar = '';
+    this.mostrarModal = false;
   }
 }

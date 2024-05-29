@@ -49,6 +49,14 @@
 <div *ngIf="mostrarFormularioVehiculo">
     <p>Formulario para registrar vehículo:</p>
 
+    <div *ngIf="clienteDatos">
+        <h3>Datos del Cliente:</h3>
+        <p><strong>Nombre:</strong> {{ clienteDatos.nombreCliente }}</p>
+        <p><strong>Apellidos:</strong> {{ clienteDatos.apellidosCliente }}</p>
+        <p><strong>Teléfono:</strong> {{ clienteDatos.telefonoCliente }}</p>
+        <p><strong>DNI:</strong> {{ clienteDatos.dni }}</p>
+    </div>
+
     <form [formGroup]="vehiculoForm" (ngSubmit)="registrarVehiculo()">
         <div class="form">
             <p-floatLabel>
