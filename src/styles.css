@@ -22,7 +22,7 @@ button{
 /* Color de SALIR y su icono */
 div.menu-container > p-menubar > div > div > div > p-tabmenu > div > div > div > ul > li.p-element.menu-item-salir > a  {
     color: rgb(255, 120, 120) !important;
-    background-color: #f9fafb;
+    background-color: #ffdfdf;
 }
 
 /* Color para "Dashboard" en usuario de tipo normal */
@@ -41,4 +41,29 @@ div.menu-container > p-menubar.menu > div > div > div > p-tabmenu > div > div > 
 div.menu-container > p-menubar.menu > div > div > div > p-tabmenu > div > div > div > ul > li.p-highlight > a {
     color: #e4d8ff !important;
     background-color: #512DA8;
+}
+
+/* Estilos para la cabecera fija */
+body > app-root > app-layout > div.menu-container > p-menubar > div > div{
+    display:flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* Nombre de usuario */
+body > app-root > app-layout > div.menu-container > p-menubar > div > div > span{
+    padding:20px;
+    border-radius: 10% 10% 0 0;
+    background-color: rgb(255, 255, 242);
+    font-weight: bold;
+}
+
+/* Colores para los botones de las tablas */
+p-paginator > div > span.p-paginator-pages > button,
+#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-next.p-paginator-element.p-link.p-disabled > anglerighticon,
+#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-last.p-paginator-element.p-link.p-disabled > angledoublerighticon,
+#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-prev.p-paginator-element.p-link.p-disabled > anglelefticon,
+#pn_id_16 > p-paginator > div > button.p-ripple.p-element.p-paginator-first.p-paginator-element.p-link.p-disabled > angledoublelefticon{
+    color:white;
 }
