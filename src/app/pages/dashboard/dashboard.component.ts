@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       next: (data) => {
         console.log(data);
         this.listaSolicitudes = data;
-        this.aplicarFiltro(); // Actualizamos filteredSolicitudes
+        this.aplicarFiltro(); 
       },
       error: (err) => {
         console.log(err.message);

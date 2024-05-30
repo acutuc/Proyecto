@@ -1,12 +1,17 @@
 <!--<p-button label="Nuevo vehículo" (click)="nuevo()"></p-button>-->
-<p-table
-    [value]="listaVehiculos"
-    [tableStyle]="{ 'min-width': '50rem'}"
-    styleClass="p-datatable-striped"
-    [paginator]="true" [rows]="10"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} vehículos"
->
+<p-table [value]="filteredVehiculos" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} vehículos">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input pInputText type="text" (input)="onFilterChange($event)" placeholder="Buscar palabra clave" />
+            </p-iconField>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th pSortableColumn="vehiculoID">ID Vehículo<p-sortIcon field="vehiculoID"></p-sortIcon></th>
@@ -14,7 +19,7 @@
             <th pSortableColumn="modelo">Modelo<p-sortIcon field="modelo"></p-sortIcon></th>
             <th pSortableColumn="anio">Año<p-sortIcon field="anio"></p-sortIcon></th>
             <th pSortableColumn="precio">Precio<p-sortIcon field="precio"></p-sortIcon></th>
-            
+
             <th>Acción</th>
         </tr>
     </ng-template>

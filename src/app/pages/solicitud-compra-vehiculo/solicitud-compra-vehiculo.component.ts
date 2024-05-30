@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { SolicitudService } from '../../services/solicitud.service';
 import { Solicitud } from '../../models/Solicitud';
-import { Cliente } from '../../models/Cliente'; // Asegúrate de que el modelo Cliente esté importado correctamente
+import { Cliente } from '../../models/Cliente';
 
 @Component({
   selector: 'app-solicitud-compra-vehiculo',
@@ -27,7 +27,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
   clienteExiste: boolean | undefined;
   clienteID: number | undefined;
   mostrarFormularioVehiculo: boolean = false;
-  clienteDatos: Cliente | null = null; // Nueva propiedad para almacenar los datos del cliente
+  clienteDatos: Cliente | null = null; 
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +73,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
         if (cliente) {
           this.clienteExiste = true;
           this.clienteID = cliente.clienteID;
-          this.clienteDatos = cliente; // Almacena los datos del cliente
+          this.clienteDatos = cliente;
           this.mostrarFormularioVehiculo = true;
           console.log('El cliente existe con ID:', this.clienteID);
         } else {
@@ -106,7 +106,7 @@ export class SolicitudCompraVehiculoComponent implements OnInit {
     this.clienteService.crearCliente(nuevoCliente).subscribe(
       (cliente) => {
         this.clienteID = cliente.clienteID;
-        this.clienteDatos = cliente; // Almacena los datos del cliente nuevo
+        this.clienteDatos = cliente;
         this.mostrarFormularioVehiculo = true;
         console.log('Cliente registrado:', cliente);
       },
