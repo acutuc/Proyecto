@@ -25,6 +25,7 @@ import { DropdownModule } from 'primeng/dropdown';
 export class DashboardComponent implements OnInit, OnDestroy {
   public listaSolicitudes: Solicitud[] = [];
   private intervalo: any;
+  public filteredSolicitudes: Solicitud[] = [];
   loading: boolean = true;
 
   solicitudParaActualizar: Solicitud | null = null;
@@ -33,6 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   statuses: any[];
   activityValues: number[] = [0, 100];
+  globalFilter: string = '';
 
   constructor(private http: HttpClient, private router: Router, private solicitudServicio: SolicitudService) { 
     this.statuses = [
@@ -46,13 +48,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('estaEsLaKey');
 
-      // Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
       if (!token) {
         this.router.navigateByUrl('/login');
       } else {
         this.obtenerSolicitudesNoAceptadas();
         this.loading = false;
-        // Consultamos cada 10 segundos si han entrado nuevas peticiones:
+        //Consultamos cada 10 segundos si han entrado nuevas peticiones:
         this.intervalo = setInterval(() => this.obtenerSolicitudesNoAceptadas(), 10000);
       }
     }
@@ -69,6 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       next: (data) => {
         console.log(data);
         this.listaSolicitudes = data;
+        this.applyFilter(); // Actualizamos filteredSolicitudes
       },
       error: (err) => {
         console.log(err.message);
@@ -106,5 +109,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.solicitudParaActualizar = null;
     this.estadoParaActualizar = '';
     this.mostrarModal = false;
+  }
+
+  onFilterChange(event: any) {
+    this.globalFilter = event.target.value.toLowerCase();
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    if (this.globalFilter) {
+      this.filteredSolicitudes = this.listaSolicitudes.filter(solicitud => 
+        (solicitud.solicitudID?.toString().toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.sucursal?.nombreSucursal?.toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.sucursal?.ubicacion?.toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.vehiculo?.marca?.toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.vehiculo?.modelo?.toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.vehiculo?.anio?.toString().toLowerCase().includes(this.globalFilter) ?? false) ||
+        (solicitud.vehiculo?.precio?.toString().toLowerCase().includes(this.globalFilter) ?? false)
+      );
+    } else {
+      this.filteredSolicitudes = this.listaSolicitudes;
+    }
   }
 }
