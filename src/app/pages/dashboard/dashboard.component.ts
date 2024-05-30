@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       next: (data) => {
         console.log(data);
         this.listaSolicitudes = data;
-        this.applyFilter(); // Actualizamos filteredSolicitudes
+        this.aplicarFiltro(); // Actualizamos filteredSolicitudes
       },
       error: (err) => {
         console.log(err.message);
@@ -113,10 +113,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onFilterChange(event: any) {
     this.globalFilter = event.target.value.toLowerCase();
-    this.applyFilter();
+    this.aplicarFiltro();
   }
 
-  applyFilter() {
+  aplicarFiltro() {
     if (this.globalFilter) {
       this.filteredSolicitudes = this.listaSolicitudes.filter(solicitud => 
         (solicitud.solicitudID?.toString().toLowerCase().includes(this.globalFilter) ?? false) ||
