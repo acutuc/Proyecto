@@ -5,17 +5,22 @@ import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/Usuario'
 import { Router } from '@angular/router';
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [TableModule, ButtonModule, CommonModule],
+  imports: [TableModule, ButtonModule, CommonModule, InputIconModule, IconFieldModule, InputTextModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
 export class UsuariosComponent implements OnInit{
   public listaUsuarios: Usuario[] = [];
   public mostrarColumnas: any[];
+  public filteredUsuarios: Usuario[] = [];
+  globalFilter: string = '';
   
   constructor(private usuarioServicio: UsuarioService, private router: Router){
     this.mostrarColumnas = [
@@ -42,11 +47,30 @@ export class UsuariosComponent implements OnInit{
     this.usuarioServicio.obtenerUsuarios().subscribe({
       next: (data) => {
         this.listaUsuarios = data;
+        this.filteredUsuarios = data;
+        this.aplicarFiltro();
       },
       error: (err) => {
         console.log(err.message);
       }
     });
+  }
+
+  onFilterChange(event: any) {
+    this.globalFilter = event.target.value.toLowerCase();
+    this.aplicarFiltro();
+  }
+
+  aplicarFiltro() {
+    if (this.globalFilter) {
+      this.filteredUsuarios = this.listaUsuarios.filter(usuario =>
+        (usuario.usuarioID?.toString().toLowerCase().includes(this.globalFilter) ?? false) ||
+        (usuario.nombreUsuario?.toLowerCase().includes(this.globalFilter) ?? false) ||
+        (usuario.tipoUsuario?.toLowerCase().includes(this.globalFilter) ?? false)
+      );
+    } else {
+      this.filteredUsuarios = this.listaUsuarios;
+    }
   }
 
   nuevoUsuario() {

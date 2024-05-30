@@ -1,5 +1,18 @@
-<p-button label="Nuevo usuario" (click)="nuevoUsuario()"></p-button>
-<p-table [value]="listaUsuarios" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped">
+
+<p-table [value]="filteredUsuarios" [tableStyle]="{ 'min-width': '50rem'}" styleClass="p-datatable-striped"
+[paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} usuarios">    
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input pInputText type="text" (input)="onFilterChange($event)" placeholder="Buscar palabra clave" />
+            </p-iconField>
+            <p-button label="Nuevo usuario" (click)="nuevoUsuario()"></p-button>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th pSortableColumn="usuarioID">ID Usuario<p-sortIcon field="usuarioID"></p-sortIcon></th>
