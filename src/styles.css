@@ -140,3 +140,31 @@ div.flex > p-button > .p-element{
     width: 200px;
     height: 47px;
 }
+
+/* Estilos para la sección de Datos del Cliente */
+.cliente-datos {
+    background-color: #f5f5f5; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    padding: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0; 
+}
+
+/* Estilo para el título */
+.cliente-datos h3 {
+    color: #512DA8; 
+    font-weight: bold; 
+    margin-bottom: 15px; 
+}
+
+/* Estilo para los datos */
+.cliente-datos p {
+    font-size: 16px; 
+    color: #333; 
+    margin: 8px 0; 
+}
+
+.cliente-datos p strong, .cliente-datos > h3 {
+    color: #512DA8; 
+}

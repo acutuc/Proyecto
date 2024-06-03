@@ -87,7 +87,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   confirmarActualizacion() {
     if (this.solicitudParaActualizar && this.solicitudParaActualizar.solicitudID !== undefined) {
-      this.solicitudServicio.actualizarEstadoSolicitud(this.solicitudParaActualizar.solicitudID, this.estadoParaActualizar).subscribe({
+      const precioActualizado = false; 
+      this.solicitudServicio.actualizarEstadoSolicitud(this.solicitudParaActualizar.solicitudID, this.estadoParaActualizar, precioActualizado).subscribe({
         next: () => {
           this.solicitudParaActualizar!.estado = this.estadoParaActualizar;
           // Actualizamos el componente al cambiar un estado:
@@ -104,6 +105,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.mostrarModal = false;
     }
   }
+  
 
   cancelarActualizacion() {
     this.solicitudParaActualizar = null;

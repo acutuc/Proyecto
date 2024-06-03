@@ -38,9 +38,10 @@ export class SolicitudService {
   }
 
   //Actualiza el ESTADO de la solicitud:
-  actualizarEstadoSolicitud(id: number, estado: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, { estado });
-  }
+actualizarEstadoSolicitud(id: number, estado: string, precioActualizado: boolean): Observable<void> {
+  return this.http.put<void>(`${this.apiUrl}/${id}`, { estado, precioActualizado });
+}
+
 
   //Obtenemos una solicitud por el vehiculoID:
   obtenerSolicitudPorVehiculoId(vehiculoID: number): Observable<Solicitud> {
