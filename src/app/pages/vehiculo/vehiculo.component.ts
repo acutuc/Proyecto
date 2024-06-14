@@ -5,11 +5,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-vehiculo',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, FloatLabelModule, ButtonModule],
   templateUrl: './vehiculo.component.html',
   styleUrl: './vehiculo.component.css'
 })
@@ -24,7 +28,8 @@ export class VehiculoComponent implements OnInit {
     private vehiculoService: VehiculoService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
   ) {
     this.formVehiculo = this.formBuilder.group({
       marca: [""],
@@ -37,15 +42,14 @@ export class VehiculoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
-      if (!token) {
-        this.router.navigateByUrl('/login')
-      }
-      
+    //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+    if (!token) {
+      this.router.navigateByUrl('/login')
     }
+
+
 
     const idParam = this.route.snapshot.paramMap.get('id');
     this.vehiculoID = idParam ? +idParam : 0;

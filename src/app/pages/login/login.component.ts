@@ -7,21 +7,20 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { LocalStorageService } from '../../services/local-storage.service'; 
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, FloatLabelModule, HttpClientModule, PasswordModule, InputTextModule, ButtonModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent implements OnInit {
-
   //Variable para alternar el formulario de registro:
   registroVisible: boolean = false;
 
-  //
+  //Objeto para el registro:
   registroObj: Registro = new Registro();
 
   loginObj: Login;
@@ -29,7 +28,11 @@ export class LoginComponent implements OnInit {
   //Variable para almacenar el tipo de usuario
   tipoUsuario = "";
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {
     this.loginObj = new Login();
     this.registroObj = new Registro();
   }
@@ -43,22 +46,20 @@ export class LoginComponent implements OnInit {
         alert("Error desconocido.");
       }
     },
-      (error: any) => {
-        //Unauthorized desde el back, mostramos el error que nos devuelve el objeto:
-        if (error.status === 401) {
-          alert(error.error.message);
+    (error: any) => {
+      //Unauthorized desde el back, mostramos el error que nos devuelve el objeto:
+      if (error.status === 401) {
+        alert(error.error.message);
+      } else {
+        console.log(error.message);
+        if (this.registroObj.claveUsuario == "" || this.registroObj.nombreUsuario === "") {
+          alert('Rellene todos los campos');
         } else {
-          console.log(error.message);
-          if(this.registroObj.claveUsuario == "" || this.registroObj.nombreUsuario === ""){
-            alert('Rellene todos los campos');
-          }else{
-            alert('Este usuario ya se encuentra registrado en la BD.');
-          }          
+          alert('Este usuario ya se encuentra registrado en la BD.');
         }
       }
-    );
+    });
   }
-
 
   onLogin() {
     this.http.post('https://localhost:7259/api/Usuario/login', this.loginObj).subscribe((res: any) => {
@@ -67,9 +68,9 @@ export class LoginComponent implements OnInit {
         this.tipoUsuario = res.tipoUsuario;
         alert("Logueado con éxito");
         //Guardamos el token:
-        localStorage.setItem('estaEsLaKey', res.token);
+        this.localStorageService.setItem('estaEsLaKey', res.token);
         //Guardamos los datos del usuario:
-        localStorage.setItem('usuarioLogueado', JSON.stringify({
+        this.localStorageService.setItem('usuarioLogueado', JSON.stringify({
           usuarioID: res.usuarioID,
           nombreUsuario: res.nombreUsuario,
           tipoUsuario: res.tipoUsuario
@@ -77,21 +78,19 @@ export class LoginComponent implements OnInit {
         if (this.tipoUsuario === "admin") {
           this.router.navigateByUrl('/dashboard');
         } else {
-          /////////////////////////////////////////////////
           this.router.navigateByUrl('/ndashboard');
         }
       } else {
-        this.handleError("Error inesperado al intentar iniciar sesasdasdión.");
+        this.handleError("Error inesperado al intentar iniciar sesión.");
       }
     },
-      (error: any) => {
-        if (error.status === 401) {
-          this.handleError(error.error.message);
-        } else {
-          this.handleError("Error inesperado al intentar iniciar dfdsafsdf.");
-        }
+    (error: any) => {
+      if (error.status === 401) {
+        this.handleError(error.error.message);
+      } else {
+        this.handleError("Error inesperado al intentar iniciar sesión.");
       }
-    );
+    });
   }
 
   private handleError(mensajeError: string) {
@@ -101,17 +100,14 @@ export class LoginComponent implements OnInit {
 
   //Comprobamos si existe la sesión iniciada:
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si hay token, nos redirige a donde nos pertenezca si somos admin u otro tipo de usuario:
-      if (token) {
-        if (this.tipoUsuario === "admin") {
-          this.router.navigateByUrl('/dashboard');
-        } else {
-          /////////////////////////////////////////////////
-          console.log("redirige a otro lado");
-        }
+    //Si hay token, nos redirige a donde nos pertenezca si somos admin u otro tipo de usuario:
+    if (token) {
+      if (this.tipoUsuario === "admin") {
+        this.router.navigateByUrl('/dashboard');
+      } else {
+        console.log("redirige a otro lado");
       }
     }
   }

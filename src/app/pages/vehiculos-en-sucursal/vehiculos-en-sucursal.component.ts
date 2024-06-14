@@ -9,6 +9,7 @@ import { VehiculoService } from '../../services/vehiculo.service';
 import { ClienteService } from '../../services/cliente.service';
 import { SolicitudService } from '../../services/solicitud.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-vehiculos-en-sucursal',
@@ -33,7 +34,8 @@ export class VehiculosEnSucursalComponent implements OnInit {
     private clienteService: ClienteService,
     private solicitudService: SolicitudService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private localStorageService: LocalStorageService
   ) {
     this.ventaForm = this.fb.group({
       dni: ['', Validators.required]
@@ -52,17 +54,16 @@ export class VehiculosEnSucursalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      if (!token) {
-        this.router.navigateByUrl('/login');
-      }
+    if (!token) {
+      this.router.navigateByUrl('/login');
     }
+
 
     this.route.params.subscribe(params => {
       this.sucursalID = +params['id'];
-      
+
       this.vehiculoService.obtenerVehiculosEnSucursal(this.sucursalID).subscribe(
         (data: any) => {
           this.vehiculos = data;
@@ -119,7 +120,7 @@ export class VehiculosEnSucursalComponent implements OnInit {
       console.log('Formulario inválido');
       return;
     }
-  
+
     const nuevoCliente = this.altaClienteForm.getRawValue();
     this.clienteService.crearCliente(nuevoCliente).subscribe(
       (cliente) => {
@@ -138,10 +139,10 @@ export class VehiculosEnSucursalComponent implements OnInit {
       console.error('SucursalID, ClienteID o VehiculoID no están definidos.');
       return;
     }
-  
+
     this.solicitudService.actualizarEstadoYClienteSolicitud(this.vehiculoID, 'vendido', this.clienteID).subscribe(
       (res) => {
-        console.log('Venta realizada:', res);
+        console.log('Venta realizada');
         this.mostrarFormularioVenta = false;
         this.ngOnInit();
       },

@@ -31,8 +31,7 @@
             <td>{{ vehiculo.anio }}</td>
             <td>{{ vehiculo.precio }}€</td>
             <td class="flex">
-                <i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editar(vehiculo)"></i>
-                <i class="pi pi-times" style="font-size: 2.5rem;" (click)="eliminar(vehiculo)"></i>
+                <p-button icon="pi pi-pen-to-square" [rounded]="true" [text]="true" [raised]="true" (click)="editar(vehiculo)" />&nbsp;
             </td>
         </tr>
     </ng-template>

@@ -13,7 +13,7 @@
     </form>
 
     <div *ngIf="clienteExiste === false">
-        <p>El cliente no existe. Por favor, rellene el siguiente formulario para registrar un nuevo cliente.</p>
+        <p class="morado">El cliente no existe. Por favor, rellene el siguiente formulario para registrar un nuevo cliente.</p>
 
         <form [formGroup]="altaClienteForm" (ngSubmit)="registrarNuevoCliente()">
             <div class="form">
@@ -47,7 +47,6 @@
 </div>
 
 <div *ngIf="mostrarFormularioVehiculo">
-    <p>Formulario para registrar vehículo:</p>
 
     <div class="cliente-datos" *ngIf="clienteDatos">
         <h3>Datos del Cliente:</h3>

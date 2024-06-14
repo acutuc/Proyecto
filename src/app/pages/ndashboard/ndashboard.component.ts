@@ -4,33 +4,33 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-ndashboard',
   standalone: true,
   imports: [CommonModule, TableModule, ButtonModule],
   templateUrl: './ndashboard.component.html',
-  styleUrl: './ndashboard.component.css'
+  styleUrls: ['./ndashboard.component.css']
 })
 export class NdashboardComponent implements OnInit {
   sucursales: any[] = [];
 
-
-  constructor(private usuarioService: UsuarioService, private router: Router) {
-
-  }
+  constructor(
+    private usuarioService: UsuarioService, 
+    private router: Router, 
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
-      if (!token) {
-        this.router.navigateByUrl('/login')
-      }
-      
+    //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+    if (!token) {
+      this.router.navigateByUrl('/login');
     }
-    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+
+    const usuarioLogueado = this.localStorageService.getItem('usuarioLogueado');
 
     if (usuarioLogueado) {
       const usuarioID = JSON.parse(usuarioLogueado).usuarioID;

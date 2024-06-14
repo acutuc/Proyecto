@@ -1,33 +1,24 @@
 <div *ngIf="listaSolicitudes.length > 0; else sinSolicitudes">
-  <p-table
-    #dt2
-    [value]="filteredSolicitudes"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [loading]="loading"
-    styleClass="p-datatable-striped"
-    [paginator]="true" [rows]="10"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} solicitudes"
-  >
-  <ng-template pTemplate="caption">
-    <div class="flex">
-      <p-iconField iconPosition="left" class="ml-auto">
-        <p-inputIcon>
-          <i class="pi pi-search"></i>
-        </p-inputIcon>
-        <input 
-          pInputText 
-          type="text" 
-          (input)="onFilterChange($event)" 
-          placeholder="Buscar palabra clave" />
-      </p-iconField>
-    </div>
-  </ng-template>
+  <p-table #dt2 [value]="filteredSolicitudes" [tableStyle]="{ 'min-width': '50rem' }" [loading]="loading"
+    styleClass="p-datatable-striped p-datatable-responsive" [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} solicitudes">
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <p-iconField iconPosition="left" class="ml-auto">
+          <p-inputIcon>
+            <i class="pi pi-search"></i>
+          </p-inputIcon>
+          <input pInputText type="text" (input)="onFilterChange($event)" placeholder="Buscar palabra clave" />
+        </p-iconField>
+      </div>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="solicitudID">ID Solicitud<p-sortIcon field="solicitudID"></p-sortIcon></th>
-        <th pSortableColumn="sucursal.nombreSucursal">Sucursal<p-sortIcon field="sucursal.nombreSucursal"></p-sortIcon></th>
-        <th pSortableColumn="sucursal.ubicacion">Ubicación Sucursal<p-sortIcon field="sucursal.ubicacion"></p-sortIcon></th>
+        <th pSortableColumn="sucursal.nombreSucursal">Sucursal<p-sortIcon field="sucursal.nombreSucursal"></p-sortIcon>
+        </th>
+        <th pSortableColumn="sucursal.ubicacion">Ubicación Sucursal<p-sortIcon field="sucursal.ubicacion"></p-sortIcon>
+        </th>
         <th pSortableColumn="vehiculo.marca">Marca Vehículo<p-sortIcon field="vehiculo.marca"></p-sortIcon></th>
         <th pSortableColumn="vehiculo.modelo">Modelo Vehículo<p-sortIcon field="vehiculo.modelo"></p-sortIcon></th>
         <th pSortableColumn="vehiculo.anio">Año Vehículo<p-sortIcon field="vehiculo.anio"></p-sortIcon></th>
@@ -37,16 +28,18 @@
     </ng-template>
     <ng-template pTemplate="body" let-solicitud>
       <tr>
-        <td>{{ solicitud.solicitudID }}</td>
-        <td>{{ solicitud.sucursal?.nombreSucursal }}</td>
-        <td>{{ solicitud.sucursal?.ubicacion }}</td>
-        <td>{{ solicitud.vehiculo?.marca }}</td>
-        <td>{{ solicitud.vehiculo?.modelo }}</td>
-        <td>{{ solicitud.vehiculo?.anio }}</td>
-        <td>{{ solicitud.vehiculo?.precio }}€</td>
-        <td class="flex">
-          <p-button icon="pi pi-check" [rounded]="true" [text]="true" [raised]="true" severity="success" (click)="actualizarEstado(solicitud, 'aprobada')" />&nbsp;
-          <p-button icon="pi pi-times" [rounded]="true" [text]="true" [raised]="true" severity="danger" (click)="actualizarEstado(solicitud, 'rechazada')" />
+        <td data-header="ID Solicitud">{{ solicitud.solicitudID }}</td>
+        <td data-header="Sucursal">{{ solicitud.sucursal?.nombreSucursal }}</td>
+        <td data-header="Ubicación Sucursal">{{ solicitud.sucursal?.ubicacion }}</td>
+        <td data-header="Marca Vehículo">{{ solicitud.vehiculo?.marca }}</td>
+        <td data-header="Modelo Vehículo">{{ solicitud.vehiculo?.modelo }}</td>
+        <td data-header="Año Vehículo">{{ solicitud.vehiculo?.anio }}</td>
+        <td data-header="Precio Vehículo">{{ solicitud.vehiculo?.precio }}€</td>
+        <td data-header="Acción" class="flex">
+          <p-button icon="pi pi-check" [rounded]="true" [text]="true" [raised]="true" severity="success"
+            (click)="actualizarEstado(solicitud, 'aprobada')" />&nbsp;
+          <p-button icon="pi pi-times" [rounded]="true" [text]="true" [raised]="true" severity="danger"
+            (click)="actualizarEstado(solicitud, 'rechazada')" />
         </td>
       </tr>
     </ng-template>
@@ -56,9 +49,6 @@
   <p>No hay solicitudes pendientes</p>
 </ng-template>
 
-<app-modal
-  *ngIf="mostrarModal"
+<app-modal *ngIf="mostrarModal"
   [message]="'¿Estás seguro de que quieres ' + (estadoParaActualizar === 'aprobada' ? 'aprobar' : 'rechazar') + ' esta solicitud?'"
-  (confirm)="confirmarActualizacion()"
-  (cancel)="cancelarActualizacion()"
-></app-modal>
+  (confirm)="confirmarActualizacion()" (cancel)="cancelarActualizacion()"></app-modal>

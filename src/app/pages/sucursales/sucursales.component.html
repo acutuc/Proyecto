@@ -28,8 +28,7 @@
             <td>{{ sucursal.nombreSucursal }}</td>
             <td>{{ sucursal.ubicacion }}</td>
             <td class="flex">
-                <i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editarSucursal(sucursal)"></i>
-                <i class="pi pi-times" style="font-size: 2.5rem;" (click)="eliminarSucursal(sucursal)"></i>
+                <p-button icon="pi pi-pen-to-square" [rounded]="true" [text]="true" [raised]="true" (click)="editarSucursal(sucursal)" />&nbsp;
             </td>
         </tr>
     </ng-template>

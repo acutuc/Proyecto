@@ -1,20 +1,23 @@
-<div class="mat-elevation-z2" style="width: 30%; padding:30px; margin:50px auto; display:flex;">
-    <h2>{{ usuarioID === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h2>
+<h2>{{ usuarioID === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h2>
 
-    <form [formGroup]="formUsuario" (ngSubmit)="onSubmit()">
-        <div class="form-group">
+<form [formGroup]="formUsuario" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <p-floatLabel>
+            <input pInputText class="form-control" id="nombreUsuario" formControlName="nombreUsuario" required>
             <label for="marca">Nombre usuario:</label>
-            <input type="text" class="form-control" id="nombreUsuario" formControlName="nombreUsuario" required>
-        </div>
+        </p-floatLabel>
+    </div>
 
-        <div class="form-group">
-            <label for="claveUsuario">Contraseña:</label>
-            <input type="password" class="form-control" id="claveUsuario" formControlName="claveUsuario" required>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar</button>
-            <button type="submit" class="btn btn-primary" (click)="volver()">Volver</button>
-        </div>
+    <div class="form-group">
+        <p-floatLabel>
+        <input pInputText type="password" class="form-control" id="claveUsuario" formControlName="claveUsuario" required>
+        <label for="claveUsuario">Contraseña:</label>
+    </p-floatLabel>
+    </div>
+    <p></p>
+    <div>
+        <p-button label="Guardar" (click)="guardar()" [raised]="true"></p-button>
+        <p-button label="Volver" (click)="volver()" [raised]="true"></p-button>
+    </div>
 
-    </form>
-</div>
+</form>

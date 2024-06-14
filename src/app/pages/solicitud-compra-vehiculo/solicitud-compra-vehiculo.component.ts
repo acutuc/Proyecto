@@ -11,11 +11,12 @@ import { VehiculoService } from '../../services/vehiculo.service';
 import { SolicitudService } from '../../services/solicitud.service';
 import { Solicitud } from '../../models/Solicitud';
 import { Cliente } from '../../models/Cliente';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-solicitud-compra-vehiculo',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, HttpClientModule, InputNumberModule],
   templateUrl: './solicitud-compra-vehiculo.component.html',
   styleUrls: ['./solicitud-compra-vehiculo.component.css']
 })

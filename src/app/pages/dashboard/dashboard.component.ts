@@ -11,6 +11,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ModalComponent } from '../modal/modal.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   activityValues: number[] = [0, 100];
   globalFilter: string = '';
 
-  constructor(private http: HttpClient, private router: Router, private solicitudServicio: SolicitudService) { 
+  constructor(private http: HttpClient, private router: Router, private solicitudServicio: SolicitudService, private localStorageService: LocalStorageService) { 
     this.statuses = [
       { label: 'Aprobada', value: 'aprobada' },
       { label: 'Rechazada', value: 'rechazada' },
@@ -45,8 +46,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
       //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
       if (!token) {
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         //Consultamos cada 10 segundos si han entrado nuevas peticiones:
         this.intervalo = setInterval(() => this.obtenerSolicitudesNoAceptadas(), 10000);
       }
-    }
+    
   }
 
   ngOnDestroy(): void {

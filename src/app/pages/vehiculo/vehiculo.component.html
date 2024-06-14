@@ -1,30 +1,39 @@
-<div class="mat-elevation-z2" style="width: 30%; padding:30px; margin:50px auto; display:flex;">
+<div>
     <h2>{{ vehiculoID === 0 ? 'Crear Vehículo' : 'Editar Vehículo' }}</h2>
 
     <form [formGroup]="formVehiculo" (ngSubmit)="onSubmit()">
 
         <div class="form-group">
-            <label for="marca">Marca:</label>
-            <input type="text" class="form-control" id="marca" formControlName="marca" required>
+            <p-floatLabel>
+                <input pInputText type="text" class="form-control" id="marca" formControlName="marca" required>
+                <label for="marca">Marca:</label>
+            </p-floatLabel>
         </div>
 
         <div class="form-group">
-            <label for="modelo">Modelo:</label>
-            <input type="text" class="form-control" id="modelo" formControlName="modelo" required>
+            <p-floatLabel>
+                <input pInputText type="text" class="form-control" id="modelo" formControlName="modelo" required>
+                <label for="modelo">Modelo:</label>
+            </p-floatLabel>
         </div>
 
         <div class="form-group">
-            <label for="anio">Año:</label>
-            <input type="number" class="form-control" id="anio" formControlName="anio" required>
+            <p-floatLabel>
+                <input pInputText type="number" class="form-control" id="anio" formControlName="anio" required>
+                <label for="anio">Año:</label>
+            </p-floatLabel>
         </div>
 
         <div class="form-group">
-            <label for="precio">Precio:</label>
-            <input type="number" class="form-control" id="precio" formControlName="precio" required>
+            <p-floatLabel>
+                <input pInputText type="number" class="form-control" id="precio" formControlName="precio" required>
+                <label for="precio">Precio:</label>
+            </p-floatLabel>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar</button>
-            <button type="submit" class="btn btn-primary" (click)="volver()">Volver</button>
+                <p-button label="Guardar" (click)="guardar()" [raised]="true"></p-button>
+                <p-button label="Volver" (click)="volver()" [raised]="true"></p-button>
+            
         </div>
 
     </form>

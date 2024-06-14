@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -16,31 +17,34 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
-export class UsuariosComponent implements OnInit{
+export class UsuariosComponent implements OnInit {
   public listaUsuarios: Usuario[] = [];
   public mostrarColumnas: any[];
   public filteredUsuarios: Usuario[] = [];
+  private intervalo: any;
   globalFilter: string = '';
-  
-  constructor(private usuarioServicio: UsuarioService, private router: Router){
+
+  constructor(private usuarioServicio: UsuarioService, private router: Router, private localStorageService: LocalStorageService) {
     this.mostrarColumnas = [
       { field: 'usuarioID', header: 'ID Usuario' },
       { field: 'nombreUsuario', header: 'Usuario' },
-      { field: 'tipoUsuario', header:"Rol"},
+      { field: 'tipoUsuario', header: "Rol" },
       { field: 'accion', header: "" }
     ];
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
-      if (!token) {
-        this.router.navigateByUrl('/login')
-      }
+    //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+    if (!token) {
+      this.router.navigateByUrl('/login')
+    }else{
       this.obtenerUsuarios();
+      this.intervalo = setInterval(() => this.obtenerUsuarios(), 5000);
     }
+    
+
   }
 
   obtenerUsuarios() {

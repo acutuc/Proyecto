@@ -6,11 +6,15 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { UsuarioService } from '../../services/usuario.service';
 import { SucursalService } from '../../services/sucursal.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, FloatLabelModule, ButtonModule],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css'
 })
@@ -30,7 +34,8 @@ export class UsuarioComponent implements OnInit {
     private route: ActivatedRoute,
     private sucursalService: SucursalService,
     private usuarioService: UsuarioService,
-    private http: HttpClient
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
   ) {
     this.formUsuario = this.formBuilder.group({
       nombreUsuario: [""],
@@ -39,15 +44,14 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
       //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
       if (!token) {
         this.router.navigateByUrl('/login')
       }
       
-    }
+    
     
     //Obtenemos la lista de sucursales:
     this.obtenerSucursales();

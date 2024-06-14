@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuItem } from 'primeng/api';
+import { LocalStorageService } from '../../services/local-storage.service'; 
 
 @Component({
   selector: 'app-layout',
@@ -13,49 +14,49 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
-
 export class LayoutComponent implements OnInit {
   usuarioLogueado: any;
   botonVolver = true;
   tipoUsuarioLogueado: any;
   items: MenuItem[] | undefined;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {
     this.router.events.subscribe(() => {
       this.botonVolver = (this.router.url !== '/dashboard' && this.router.url !== "/ndashboard");
     });
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== "undefined") {
-      const usuarioLogueadoString = localStorage.getItem('usuarioLogueado');
-      if (usuarioLogueadoString) {
-        this.usuarioLogueado = JSON.parse(usuarioLogueadoString).nombreUsuario;
-        this.tipoUsuarioLogueado = JSON.parse(usuarioLogueadoString).tipoUsuario;
-      } else {
-        this.router.navigate(['/login']);
-      }
+    const usuarioLogueadoString = this.localStorageService.getItem('usuarioLogueado');
+    if (usuarioLogueadoString) {
+      this.usuarioLogueado = JSON.parse(usuarioLogueadoString).nombreUsuario;
+      this.tipoUsuarioLogueado = JSON.parse(usuarioLogueadoString).tipoUsuario;
+    } else {
+      this.router.navigate(['/login']);
+    }
 
-      if (this.tipoUsuarioLogueado === "admin") {
-        this.items = [
-          { label: 'Dashboard', icon: 'pi pi-home', command: () => this.volver() },
-          { label: 'Vehículos', icon: 'pi pi-car', command: () => this.vehiculos() },
-          { label: 'Sucursales', icon: 'pi pi-building', command: () => this.sucursales() },
-          { label: 'Usuarios', icon: 'pi pi-users', command: () => this.usuarios() },
-          { label: 'Salir', icon: 'pi pi-sign-out', command: () => this.logout(), styleClass: 'menu-item-salir'}
-        ];
-      } else {
-        this.items = [
-          { label: 'Dashboard', icon: 'pi pi-home', command: () => this.volver(), styleClass: 'menu-item-dashboard-normal' },
-          { label: 'Salir', icon: 'pi pi-sign-out', command: () => this.logout(), styleClass: 'menu-item-salir' }
-        ];
-      }
+    if (this.tipoUsuarioLogueado === "admin") {
+      this.items = [
+        { label: 'Dashboard', icon: 'pi pi-home', command: () => this.volver() },
+        { label: 'Vehículos', icon: 'pi pi-car', command: () => this.vehiculos() },
+        { label: 'Sucursales', icon: 'pi pi-building', command: () => this.sucursales() },
+        { label: 'Usuarios', icon: 'pi pi-users', command: () => this.usuarios() },
+        { label: 'Salir', icon: 'pi pi-sign-out', command: () => this.logout(), styleClass: 'menu-item-salir'}
+      ];
+    } else {
+      this.items = [
+        { label: 'Dashboard', icon: 'pi pi-home', command: () => this.volver(), styleClass: 'menu-item-dashboard-normal' },
+        { label: 'Salir', icon: 'pi pi-sign-out', command: () => this.logout(), styleClass: 'menu-item-salir' }
+      ];
     }
   }
 
   logout() {
-    localStorage.removeItem('estaEsLaKey');
-    localStorage.removeItem('usuarioLogueado');
+    this.localStorageService.removeItem('estaEsLaKey');
+    this.localStorageService.removeItem('usuarioLogueado');
     this.router.navigate(['/login']);
   }
 

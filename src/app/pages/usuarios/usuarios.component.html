@@ -31,7 +31,10 @@
                 <td>{{ usuario.tipoUsuario }}</td>
             }
             @if (usuario.tipoUsuario !== "admin"){
-                <td class="flex"><i class="pi pi-pen-to-square" style="font-size: 2.5rem;" (click)="editarUsuario(usuario)"></i><i class="pi pi-times"style="font-size: 2.5rem;" (click)="eliminarUsuario(usuario)"></i></td>
+                <td class="flex">
+                    <p-button icon="pi pi-pen-to-square" [rounded]="true" [text]="true" [raised]="true" (click)="editarUsuario(usuario)" />&nbsp;
+                    <p-button icon="pi pi-times" [rounded]="true" [text]="true" [raised]="true" (click)="eliminarUsuario(usuario)" /> 
+                </td>
             }@else {
                 <td></td>
             }

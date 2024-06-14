@@ -1,27 +1,27 @@
-<div class="mat-elevation-z2" style="width: 30%; padding:30px; margin:50px auto; display:flex;">
-    <h2>{{ sucursalID === 0 ? 'Crear Sucursal' : 'Editar Sucursal' }}</h2>
+<h2>{{ sucursalID === 0 ? 'Crear Sucursal' : 'Editar Sucursal' }}</h2>
 
-    <form [formGroup]="formSucursal" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="usuarioID">Usuario:</label>
-            <select formControlName="usuarioID">
-                <option value="" disabled selected>Seleccione un usuario</option>
-                <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="nombreSucursal">Nombre:</label>
-            <input type="text" class="form-control" id="nombreSucursal" formControlName="nombreSucursal" required>
-        </div>
-
-        <div class="form-group">
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" class="form-control" id="ubicacion" formControlName="ubicacion" required>
-        </div>
-
-        <div>
-            <button type="submit" class="btn btn-primary" (click)="guardar()">Guardar</button>
-            <button type="submit" class="btn btn-primary" (click)="volver()">Volver</button>
-        </div>
-    </form>
-</div>
+<form [formGroup]="formSucursal" (ngSubmit)="onSubmit()" class="sucursal">
+    <div>
+        <select pInputText id="usuarioID" formControlName="usuarioID">
+            <option value="" disabled selected>Seleccione un usuario</option>
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombre }}</option>
+        </select>
+    </div>
+    <p></p>
+    <div>
+        <p-floatLabel>
+            <input pInputText id="nombreSucursal" formControlName="nombreSucursal" />
+            <label for="nombreSucursal">Nombre</label>
+        </p-floatLabel>
+    </div>
+    <p></p>
+    <div>
+        <p-floatLabel>
+            <input pInputText id="ubicacion" formControlName="ubicacion" />
+            <label for="ubicacion">Ubicación</label>
+        </p-floatLabel>
+    </div>
+    <p></p>
+    <p-button label="Guardar" type="submit" [raised]="true"></p-button>
+    <p-button label="Volver" (click)="volver()" [raised]="true"></p-button>
+</form>

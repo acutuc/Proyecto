@@ -6,11 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SucursalService } from '../../services/sucursal.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-sucursal',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, FloatLabelModule, ButtonModule],
   templateUrl: './sucursal.component.html',
   styleUrl: './sucursal.component.css'
 })
@@ -28,7 +32,8 @@ export class SucursalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private sucursalService: SucursalService
+    private sucursalService: SucursalService,
+    private localStorageService: LocalStorageService
   ) {
     this.formSucursal = this.formBuilder.group({
       usuarioID: [null],
@@ -38,21 +43,20 @@ export class SucursalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
-      if (!token) {
-        this.router.navigateByUrl('/login')
-      }
-      
+    //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+    if (!token) {
+      this.router.navigateByUrl('/login')
     }
+
+
     //Obtenemos la lista de usuarios:
     this.obtenerUsuarios();
-  
+
     const idParam = this.route.snapshot.paramMap.get('id');
     this.sucursalID = idParam ? +idParam : 0;
-  
+
     //Si es diferente a 0, es que estamos modificando:
     if (this.sucursalID !== 0) {
       this.sucursalService.obtenerSucursal(this.sucursalID).subscribe({
@@ -140,24 +144,24 @@ export class SucursalComponent implements OnInit {
       // Si sucursalID no es 0, estamos actualizando una sucursal existente
       console.log('Datos a enviar:', this.formSucursal.value);
       this.http.put(`https://localhost:7259/api/Sucursal/${this.sucursalID}`, sucursalData, httpOptions)
-      .subscribe(
-        response => {
-          alert('Sucursal actualizada correctamente.');
-          this.router.navigate(['/sucursales']);
-          //Reiniciamos el estado de la solicitud:
-          this.isSubmitting = false;
-        },
-        error => {
-          console.error('Error al actualizar la sucursal:', error);
-          if (error.error && error.error.message) {
-            alert('Error: ' + error.error.message);
-          } else {
-            alert('Error desconocido al actualizar la sucursal.');
+        .subscribe(
+          response => {
+            alert('Sucursal actualizada correctamente.');
+            this.router.navigate(['/sucursales']);
+            //Reiniciamos el estado de la solicitud:
+            this.isSubmitting = false;
+          },
+          error => {
+            console.error('Error al actualizar la sucursal:', error);
+            if (error.error && error.error.message) {
+              alert('Error: ' + error.error.message);
+            } else {
+              alert('Error desconocido al actualizar la sucursal.');
+            }
+            //Reiniciamos el estado de la solicitud:
+            this.isSubmitting = false;
           }
-          //Reiniciamos el estado de la solicitud:
-          this.isSubmitting = false;
-        }
-      );
+        );
     }
   }
 

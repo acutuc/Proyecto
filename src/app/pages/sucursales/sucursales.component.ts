@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-sucursales',
@@ -20,12 +21,13 @@ export class SucursalesComponent implements OnInit {
   public listaSucursales: Sucursal[] = [];
   public mostrarColumnas: any[];
   public filteredSucursales: Sucursal[] = [];
+  private intervalo: any;
   globalFilter: string = '';
 
-  constructor(private sucursalServicio: SucursalService, private router: Router) {
+  constructor(private sucursalServicio: SucursalService, private router: Router, private localStorageService: LocalStorageService) {
     this.mostrarColumnas = [
       { field: 'sucursalID', header: 'ID Sucursal' },
-      {field:'usuarioID', header: 'ID Usuario'},
+      { field: 'usuarioID', header: 'ID Usuario' },
       { field: 'nombreSucursal', header: 'Nombre' },
       { field: 'ubicacion', header: 'Ubicación' },
       { field: 'accion', header: "" }
@@ -33,15 +35,17 @@ export class SucursalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('estaEsLaKey');
+    const token = this.localStorageService.getItem('estaEsLaKey');
 
-      //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
-      if (!token) {
-        this.router.navigateByUrl('/login')
-      }
+    //Si no tenemos token, no podemos acceder a la página y nos redirigirá al login
+    if (!token) {
+      this.router.navigateByUrl('/login')
+    }else{
       this.obtenerSucursales();
+      this.intervalo = setInterval(() => this.obtenerSucursales(), 5000);
     }
+    
+
   }
 
   obtenerSucursales() {
